@@ -3,6 +3,8 @@ import shutil
 import os
 from sklearn.neighbors import NearestNeighbors
 
+from scipy.spatial.distance import cdist
+
 __all__ = ['search_NN']
 
 
@@ -17,14 +19,26 @@ def search_NN(test_emb, train_emb_flat, NN=1, method='kdt'):
     closest_inds = np.empty((Ntest, I, J, NN), dtype=np.int32)
     l2_maps = np.empty((Ntest, I, J, NN), dtype=np.float32)
     ######Roger###############
-    neigh=NearestNeighbors( n_neighbors=NN, n_jobs=-1)
-    print('fitting NN')
-    neigh.fit(train_emb_flat)
-    print('querying NN')
-    
     test_emb_flat=test_emb.reshape(-1,D)
-    dists, inds = neigh.kneighbors(test_emb_flat)#N,1
-    print('NN done')
+    
+    
+    dists_=cdist(test_emb_flat, train_emb_flat)#ntest,ntrain
+    inds=np.argmin(dists_, axis=1)#n,1
+    i=(np.arange(dists_.shape[0]),inds)
+    dists=dists_[i]
+    
+    
+    
+    
+    
+#     neigh=NearestNeighbors( n_neighbors=NN, n_jobs=-1)
+#     print('fitting NN')
+#     neigh.fit(train_emb_flat)
+#     print('querying NN')
+    
+    
+#     dists, inds = neigh.kneighbors(test_emb_flat)#N,1
+#     print('NN done')
     
 #     dists, inds = kdt.query(test_emb_flat, return_distance=True, k=NN)#N,1
 #     closest_inds=inds.reshape(Ntest, I, J, NN)
