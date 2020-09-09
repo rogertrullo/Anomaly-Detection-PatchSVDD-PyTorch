@@ -35,9 +35,9 @@ def search_NN(test_emb, train_emb_flat, NN=1, method='kdt'):
     dists, inds = neigh.kneighbors(test_emb_flat)#N,1
     print('NN done')
     
-#     dists, inds = kdt.query(test_emb_flat, return_distance=True, k=NN)#N,1
-#     closest_inds=inds.reshape(Ntest, I, J, NN)
-#     l2_maps=dists.reshape(Ntest, I, J, NN)
+    #dists, inds = kdt.query(test_emb_flat, return_distance=True, k=NN)#N,1
+    closest_inds=inds.reshape(Ntest, I, J, NN)
+    l2_maps=dists.reshape(Ntest, I, J, NN)
     ################################
     
     
