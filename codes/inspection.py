@@ -114,6 +114,7 @@ def measure_emb_NN(emb_te, emb_tr, method='kdt', NN=1):
     print('emb training',emb_tr.shape, 'emb testing',emb_te.shape)
     D = emb_tr.shape[-1]
     train_emb_all = emb_tr.reshape(-1, D)
+    print('train_emb_all',train_emb_all.shape)
 
     l2_maps, _ = search_NN(emb_te, train_emb_all, method=method, NN=NN)
     anomaly_maps = np.mean(l2_maps, axis=-1)
