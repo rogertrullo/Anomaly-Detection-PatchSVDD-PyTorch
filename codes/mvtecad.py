@@ -4,7 +4,7 @@ from imageio import imread
 from glob import glob
 from sklearn.metrics import roc_auc_score
 import os
-import matplot.pyplot as plt
+import matplotlib.pyplot as plt
 
 DATASET_PATH = '/kaggle/working/'
 
