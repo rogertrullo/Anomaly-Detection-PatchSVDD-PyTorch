@@ -19,6 +19,8 @@ def search_NN(test_emb, train_emb_flat, NN=1, method='kdt'):
 
     for n in range(Ntest):
         for i in range(I):
+            if n==0 and n ==0:
+                print('query shape',test_emb[n, i, :, :].shape)
             dists, inds = kdt.query(test_emb[n, i, :, :], return_distance=True, k=NN)
             closest_inds[n, i, :, :] = inds[:, :]
             l2_maps[n, i, :, :] = dists[:, :]
