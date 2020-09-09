@@ -119,7 +119,7 @@ def segmentation_auroc(obj, anomaly_maps):
     gt = gt.astype(np.int32)
     gt[gt == 255] = 1  # 1: anomaly
     print('gt shape in seg auroc',gt.shape, 'anomaly_maps shape in seg auroc',anomaly_maps.shape)
-    anomaly_maps = bilinears(anomaly_maps, (256, 256))
+    #anomaly_maps = bilinears(anomaly_maps, (256, 256))
     print('computing rocs')
     auroc = roc_auc_score(gt.flatten(), anomaly_maps.flatten())
     print('rocs computed')
