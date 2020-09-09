@@ -72,7 +72,7 @@ def train(args):
 
             loss = loss_pos_64 + loss_pos_32 + args.lambda_value * (loss_svdd_64 + loss_svdd_32)
             if i%10==0:
-                print(f'it {i} last loss {loss.item()}')
+                print(f'it {i}: loss_pos_64:{loss_pos_64}, loss_pos_32:{loss_pos_32}, loss_svdd_64:{loss_svdd_64}, loss_svdd_32:{loss_svdd_32}, total loss:{loss.item()}')
             loss.backward()
             opt.step()
 
