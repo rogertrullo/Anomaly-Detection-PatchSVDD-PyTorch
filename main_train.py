@@ -61,7 +61,7 @@ def train(args):
             for module in modules:
                 module.train()
 
-            for d in loader:
+            for i,d in enumerate(loader):
                 d = to_device(d, 'cuda', non_blocking=True)
                 opt.zero_grad()
 
@@ -71,7 +71,8 @@ def train(args):
                 loss_svdd_32 = SVDD_Dataset.infer(enc.enc, d['svdd_32'])
 
                 loss = loss_pos_64 + loss_pos_32 + args.lambda_value * (loss_svdd_64 + loss_svdd_32)
-
+                if i%10==0:
+                    print(f'it {i} last loss {loss.item()}')
                 loss.backward()
                 opt.step()
 
