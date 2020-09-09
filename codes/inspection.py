@@ -40,10 +40,10 @@ def assess_anomaly_maps(obj, anomaly_maps):
 
 #########################
 
-def eval_encoder_NN_multiK(enc, obj):
+def eval_encoder_NN_multiK(enc, obj, x_tr, x_te):
     print('loading training and testing datasets')
-    x_tr = mvtecad.get_x_standardized(obj, mode='train')
-    x_te = mvtecad.get_x_standardized(obj, mode='test')
+    #x_tr = mvtecad.get_x_standardized(obj, mode='train')
+    #x_te = mvtecad.get_x_standardized(obj, mode='test')
     print('computing embeddings 64')
     embs64_tr = infer(x_tr, enc, K=64, S=16)
     embs64_te = infer(x_te, enc, K=64, S=16)
