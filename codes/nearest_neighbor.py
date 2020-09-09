@@ -10,14 +10,14 @@ def search_NN(test_emb, train_emb_flat, NN=1, method='kdt'):
     if method == 'ngt':
         return search_NN_ngt(test_emb, train_emb_flat, NN=NN)
 
-    from sklearn.neighbors import KDTree
-    kdt = KDTree(train_emb_flat)
+#     from sklearn.neighbors import KDTree
+#     kdt = KDTree(train_emb_flat)
 
     Ntest, I, J, D = test_emb.shape
     closest_inds = np.empty((Ntest, I, J, NN), dtype=np.int32)
     l2_maps = np.empty((Ntest, I, J, NN), dtype=np.float32)
     ######Roger###############
-    neigh=NearestNeighbors( n_neighbors=1, n_jobs=-1)
+    neigh=NearestNeighbors( n_neighbors=NN, n_jobs=-1)
     print('fitting NN')
     neigh.fit(train_emb_flat)
     print('querying NN')
