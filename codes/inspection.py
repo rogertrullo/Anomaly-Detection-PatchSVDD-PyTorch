@@ -66,6 +66,7 @@ def eval_embeddings_NN_multiK(obj, embs64, embs32, NN=1):
     maps_64 = distribute_scores(maps_64, (256, 256), K=64, S=16)
     print('assessing maps 64')
     det_64, seg_64 = assess_anomaly_maps(obj, maps_64)
+    print('det auc64',det_64,'seg auc64',seg_64)
 
     emb_tr, emb_te = embs32
     print('nn 32')
@@ -74,6 +75,7 @@ def eval_embeddings_NN_multiK(obj, embs64, embs32, NN=1):
     maps_32 = distribute_scores(maps_32, (256, 256), K=32, S=4)
     print('assessing maps 32')
     det_32, seg_32 = assess_anomaly_maps(obj, maps_32)
+    print('det auc32',det_32,'seg auc32',seg_32)
     
     maps_sum = maps_64 + maps_32
     print('assessing maps 64+32')
