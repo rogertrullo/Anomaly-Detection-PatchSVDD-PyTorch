@@ -47,7 +47,7 @@ def set_root_path(new_path):
 
 def get_x(obj, mode='train'):
     fpattern = os.path.join(DATASET_PATH, f'{obj}/{mode}/*/*.png')
-    print(fpattern)
+    #print(fpattern)
     fpaths = sorted(glob(fpattern))
 
     if mode == 'test':
