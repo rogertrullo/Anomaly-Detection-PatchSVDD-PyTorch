@@ -76,9 +76,9 @@ def train(args):
             loss.backward()
             opt.step()
 
-        aurocs = eval_encoder_NN_multiK(enc, obj)
-        log_result(obj, aurocs)
-        enc.save(obj)
+    aurocs = eval_encoder_NN_multiK(enc, obj)
+    log_result(obj, aurocs)
+    enc.save(obj)
 
 
 def log_result(obj, aurocs):
