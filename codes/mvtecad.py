@@ -5,7 +5,7 @@ from glob import glob
 from sklearn.metrics import roc_auc_score
 import os
 
-DATASET_PATH = '/path/to/the/dataset'
+DATASET_PATH = '/kaggle/working/input/'
 
 
 __all__ = ['objs', 'set_root_path',
