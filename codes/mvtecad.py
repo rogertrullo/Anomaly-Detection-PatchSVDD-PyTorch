@@ -125,7 +125,7 @@ def segmentation_auroc(obj, anomaly_maps):
     ax[0].imshow(anomaly_maps[0], cmap='Spectral')
     ax[0].set_title('before bilinear')
     ax[1].imshow(anomaly_maps_[0], cmap='Spectral')
-    ax[0].set_title('after bilinear')
+    ax[1].set_title('after bilinear')
     plt.savefig('ano_maps.png')
     plt.close()
     
