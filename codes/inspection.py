@@ -10,10 +10,12 @@ __all__ = ['eval_encoder_NN_multiK', 'eval_embeddings_NN_multiK']
 
 def infer(x_, enc, K, S):
     x = NHWC2NCHW(x_)
+    print('computing patch dataset and dataloader')
     dataset = PatchDataset_NCHW(x, K=K, S=S)
     loader = DataLoader(dataset, batch_size=128, shuffle=False, pin_memory=True, num_workers=8)
     embs = np.empty((dataset.N, dataset.row_num, dataset.col_num, enc.D), dtype=np.float32)  # [-1, I, J, D]
     enc = enc.eval()
+    print(f'computing actual embs for {len(dataset)} patches')
     with torch.no_grad():
         for xs, ns, iis, js in loader:
             xs = xs.cuda()
