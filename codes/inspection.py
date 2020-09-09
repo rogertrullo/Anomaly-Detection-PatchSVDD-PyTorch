@@ -111,6 +111,7 @@ def eval_embeddings_NN_multiK(obj, embs64, embs32, NN=1):
 
 def measure_emb_NN(emb_te, emb_tr, method='kdt', NN=1):
     from .nearest_neighbor import search_NN
+    print('emb training',emb_tr.shape, 'emb testing',emb_te.shape)
     D = emb_tr.shape[-1]
     train_emb_all = emb_tr.reshape(-1, D)
 
