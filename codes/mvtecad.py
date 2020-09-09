@@ -4,6 +4,7 @@ from imageio import imread
 from glob import glob
 from sklearn.metrics import roc_auc_score
 import os
+import matplot.pyplot as plt
 
 DATASET_PATH = '/kaggle/working/'
 
@@ -119,9 +120,13 @@ def segmentation_auroc(obj, anomaly_maps):
     gt = gt.astype(np.int32)
     gt[gt == 255] = 1  # 1: anomaly
     print('gt shape in seg auroc',gt.shape, 'anomaly_maps shape in seg auroc',anomaly_maps.shape)
-    #anomaly_maps = bilinears(anomaly_maps, (256, 256))
+    anomaly_maps_ = bilinears(anomaly_maps, (256, 256))
+    fig, ax=plt.subplots(figsize=(15, 8), ncols=2)
+    ax[0].imshow(anomaly_maps, cmap='Spectral')
+    ax[1].imshow(anomaly_maps_, cmap='Spectral')
+    
     print('computing rocs')
-    auroc = roc_auc_score(gt.flatten(), anomaly_maps.flatten())
+    auroc = roc_auc_score(gt.flatten(), anomaly_maps_.flatten())
     print('rocs computed')
     return auroc
 
