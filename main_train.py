@@ -75,8 +75,7 @@ def train(args):
 
             loss = loss_pos_64 + loss_pos_32 + args.lambda_value * (loss_svdd_64 + loss_svdd_32)
             if i%10==0:
-                print(f'it {i}: loss_pos_64:{loss_pos_64.item():.4f}, loss_pos_32:{loss_pos_32.item():.4f},
-                      \loss_svdd_64:{loss_svdd_64.item():.4f}, loss_svdd_32:{loss_svdd_32.item():.4f}, total loss:{loss.item():.4f}')
+                print(f'it {i}: loss_pos_64:{loss_pos_64.item():.4f}, loss_pos_32:{loss_pos_32.item():.4f}, loss_svdd_64:{loss_svdd_64.item():.4f}, loss_svdd_32:{loss_svdd_32.item():.4f}, total loss:{loss.item():.4f}')
             loss.backward()
             opt.step()
 
