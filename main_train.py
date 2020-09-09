@@ -7,20 +7,24 @@ from codes.datasets import *
 from codes.networks import *
 from codes.inspection import eval_encoder_NN_multiK
 from codes.utils import *
-
-parser = argparse.ArgumentParser()
-
-parser.add_argument('--obj', default='hazelnut', type=str)
-parser.add_argument('--lambda_value', default=1, type=float)
-parser.add_argument('--D', default=64, type=int)
-
-parser.add_argument('--epochs', default=300, type=int)
-parser.add_argument('--lr', default=1e-4, type=float)
-
-args = parser.parse_args()
+from argparse import Namespace
 
 
-def train():
+# parser = argparse.ArgumentParser()
+
+# parser.add_argument('--obj', default='hazelnut', type=str)
+# parser.add_argument('--lambda_value', default=1, type=float)
+# parser.add_argument('--D', default=64, type=int)
+
+# parser.add_argument('--epochs', default=300, type=int)
+# parser.add_argument('--lr', default=1e-4, type=float)
+
+# args = parser.parse_args()
+
+
+
+
+def train(args):
     obj = args.obj
     D = args.D
     lr = args.lr
@@ -93,4 +97,6 @@ def log_result(obj, aurocs):
 
 
 if __name__ == '__main__':
-    train()
+    args = dict(obj=16,n_feats='carpet',lambda_value=1,D=64,epochs=300, lr=1e-4)
+    args = Namespace(**args)
+    train(args)
