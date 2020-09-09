@@ -8,8 +8,8 @@ from .utils import PatchDataset_NCHW, NHWC2NCHW, distribute_scores
 __all__ = ['eval_encoder_NN_multiK', 'eval_embeddings_NN_multiK']
 
 
-def infer(x, enc, K, S):
-    x = NHWC2NCHW(x)
+def infer(x_, enc, K, S):
+    x = NHWC2NCHW(x_)
     dataset = PatchDataset_NCHW(x, K=K, S=S)
     loader = DataLoader(dataset, batch_size=64, shuffle=False, pin_memory=True)
     embs = np.empty((dataset.N, dataset.row_num, dataset.col_num, enc.D), dtype=np.float32)  # [-1, I, J, D]
@@ -36,14 +36,15 @@ def assess_anomaly_maps(obj, anomaly_maps):
 #########################
 
 def eval_encoder_NN_multiK(enc, obj):
+    print('loading training and testing datasets')
     x_tr = mvtecad.get_x_standardized(obj, mode='train')
     x_te = mvtecad.get_x_standardized(obj, mode='test')
     print('computing embeddings 64')
     embs64_tr = infer(x_tr, enc, K=64, S=16)
     embs64_te = infer(x_te, enc, K=64, S=16)
 
-    x_tr = mvtecad.get_x_standardized(obj, mode='train')
-    x_te = mvtecad.get_x_standardized(obj, mode='test')
+    #x_tr = mvtecad.get_x_standardized(obj, mode='train')
+    #x_te = mvtecad.get_x_standardized(obj, mode='test')
     print('computing embeddings 32')
     embs32_tr = infer(x_tr, enc.enc, K=32, S=4)
     embs32_te = infer(x_te, enc.enc, K=32, S=4)
