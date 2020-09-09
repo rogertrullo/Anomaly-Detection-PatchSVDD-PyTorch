@@ -38,13 +38,13 @@ def assess_anomaly_maps(obj, anomaly_maps):
 def eval_encoder_NN_multiK(enc, obj):
     x_tr = mvtecad.get_x_standardized(obj, mode='train')
     x_te = mvtecad.get_x_standardized(obj, mode='test')
-
+    print('computing embeddings 64')
     embs64_tr = infer(x_tr, enc, K=64, S=16)
     embs64_te = infer(x_te, enc, K=64, S=16)
 
     x_tr = mvtecad.get_x_standardized(obj, mode='train')
     x_te = mvtecad.get_x_standardized(obj, mode='test')
-
+    print('computing embeddings 32')
     embs32_tr = infer(x_tr, enc.enc, K=32, S=4)
     embs32_te = infer(x_te, enc.enc, K=32, S=4)
 
@@ -56,19 +56,25 @@ def eval_encoder_NN_multiK(enc, obj):
 
 def eval_embeddings_NN_multiK(obj, embs64, embs32, NN=1):
     emb_tr, emb_te = embs64
+    print('nn 64')
     maps_64 = measure_emb_NN(emb_te, emb_tr, method='kdt', NN=NN)
     maps_64 = distribute_scores(maps_64, (256, 256), K=64, S=16)
+    print('assessing maps 64')
     det_64, seg_64 = assess_anomaly_maps(obj, maps_64)
 
     emb_tr, emb_te = embs32
+    print('nn 32')
     maps_32 = measure_emb_NN(emb_te, emb_tr, method='ngt', NN=NN)
     maps_32 = distribute_scores(maps_32, (256, 256), K=32, S=4)
+    print('assessing maps 32')
     det_32, seg_32 = assess_anomaly_maps(obj, maps_32)
-
+    
     maps_sum = maps_64 + maps_32
+    print('assessing maps 64+32')
     det_sum, seg_sum = assess_anomaly_maps(obj, maps_sum)
 
     maps_mult = maps_64 * maps_32
+    print('assessing maps 64*32')
     det_mult, seg_mult = assess_anomaly_maps(obj, maps_mult)
 
     return {
