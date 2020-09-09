@@ -6,7 +6,7 @@ import os
 __all__ = ['search_NN']
 
 
-def search_NN(test_emb, train_emb_flat, NN=1, method='kdt'):
+def search_NN(test_emb, train_emb_flat, NN=1, method='ngt'):
     if method == 'ngt':
         return search_NN_ngt(test_emb, train_emb_flat, NN=NN)
 
@@ -36,8 +36,8 @@ def search_NN_ngt(test_emb, train_emb_flat, NN=1):
     # os.makedirs('tmp', exist_ok=True)
     dpath = f'/tmp/{os.getpid()}'
     ngtpy.create(dpath, D)
-    index = ngtpy.Index(dpath)
-    index.batch_insert(train_emb_flat)
+    index = ngtpy.Index(dpath, num_threads=24)
+    index.batch_insert(train_emb_flat, num_threads=24)
 
     for n in range(Ntest):
         for i in range(I):
