@@ -41,8 +41,10 @@ def train(args):
         opt = torch.optim.Adam(params=params, lr=lr)
 
     with task('Datasets'):
-        train_x = mvtecad.get_x_standardized(obj, mode='train')
-        train_x = NHWC2NCHW(train_x)
+        print('loading training and testing sets')
+        x_tr = mvtecad.get_x_standardized(obj, mode='train')
+        x_te = mvtecad.get_x_standardized(obj, mode='test')
+        train_x = NHWC2NCHW(x_tr)
 
         rep = 100
         datasets = dict()
@@ -58,7 +60,7 @@ def train(args):
     print('Start training')
     for i_epoch in range(args.epochs):
         print('epoch', i_epoch)
-        aurocs = eval_encoder_NN_multiK(enc, obj)
+        aurocs = eval_encoder_NN_multiK(enc, obj, x_tr=x_tr, x_te=x_te)
         log_result(obj, aurocs)
         enc.save(obj)
         for module in modules:
