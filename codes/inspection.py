@@ -26,9 +26,11 @@ def infer(x_, enc, K, S):
 
 
 def assess_anomaly_maps(obj, anomaly_maps):
+    print('computing auc seg')
     auroc_seg = mvtecad.segmentation_auroc(obj, anomaly_maps)
 
     anomaly_scores = anomaly_maps.max(axis=-1).max(axis=-1)
+    print('computing auc det')
     auroc_det = mvtecad.detection_auroc(obj, anomaly_scores)
     return auroc_det, auroc_seg
 
