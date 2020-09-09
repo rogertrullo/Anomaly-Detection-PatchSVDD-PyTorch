@@ -117,8 +117,8 @@ def detection_auroc(obj, anomaly_scores):
 
 def segmentation_auroc(obj, anomaly_maps):
     gt = get_mask(obj)
-    gt = gt.astype(np.int32)
-    gt[gt == 255] = 1  # 1: anomaly
+    gt = gt.astype(np.uint8)
+    gt[gt >0] = 1  # 1: anomaly
     print('gt shape in seg auroc',gt.shape, 'anomaly_maps shape in seg auroc',anomaly_maps.shape)
     anomaly_maps_ = bilinears(anomaly_maps, (256, 256))
     fig, ax=plt.subplots(figsize=(15, 8), ncols=2)
@@ -130,7 +130,7 @@ def segmentation_auroc(obj, anomaly_maps):
     plt.close()
     
     print('computing rocs')
-    auroc = roc_auc_score(gt.flatten(), anomaly_maps_.flatten())
+    auroc = roc_auc_score(gt.flatten(), anomaly_maps_.flatten().astype(np.float32))
     print('rocs computed')
     return auroc
 
