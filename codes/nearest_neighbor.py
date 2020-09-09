@@ -22,23 +22,18 @@ def search_NN(test_emb, train_emb_flat, NN=1, method='kdt'):
     test_emb_flat=test_emb.reshape(-1,D)
     
     
-    dists_=cdist(test_emb_flat, train_emb_flat)#ntest,ntrain
-    inds=np.argmin(dists_, axis=1)#n,1
-    i=(np.arange(dists_.shape[0]),inds)
-    dists=dists_[i]
+#     dists_=cdist(test_emb_flat, train_emb_flat)#ntest,ntrain
+#     inds=np.argmin(dists_, axis=1)#n,1
+#     i=(np.arange(dists_.shape[0]),inds)
+#     dists=dists_[i]
     
     
-    
-    
-    
-#     neigh=NearestNeighbors( n_neighbors=NN, n_jobs=-1)
-#     print('fitting NN')
-#     neigh.fit(train_emb_flat)
-#     print('querying NN')
-    
-    
-#     dists, inds = neigh.kneighbors(test_emb_flat)#N,1
-#     print('NN done')
+    neigh=NearestNeighbors( n_neighbors=NN, n_jobs=-1)
+    print('fitting NN')
+    neigh.fit(train_emb_flat)
+    print('querying NN')
+    dists, inds = neigh.kneighbors(test_emb_flat)#N,1
+    print('NN done')
     
 #     dists, inds = kdt.query(test_emb_flat, return_distance=True, k=NN)#N,1
 #     closest_inds=inds.reshape(Ntest, I, J, NN)
