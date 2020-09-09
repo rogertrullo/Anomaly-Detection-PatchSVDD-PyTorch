@@ -58,6 +58,9 @@ def train(args):
     print('Start training')
     for i_epoch in range(args.epochs):
         print('epoch', i_epoch)
+        aurocs = eval_encoder_NN_multiK(enc, obj)
+        log_result(obj, aurocs)
+        enc.save(obj)
         for module in modules:
             module.train()
 
@@ -76,9 +79,9 @@ def train(args):
             loss.backward()
             opt.step()
 
-    aurocs = eval_encoder_NN_multiK(enc, obj)
-    log_result(obj, aurocs)
-    enc.save(obj)
+#     aurocs = eval_encoder_NN_multiK(enc, obj)
+#     log_result(obj, aurocs)
+#     enc.save(obj)
 
 
 def log_result(obj, aurocs):
