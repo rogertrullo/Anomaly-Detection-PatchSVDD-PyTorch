@@ -122,8 +122,8 @@ def segmentation_auroc(obj, anomaly_maps):
     print('gt shape in seg auroc',gt.shape, 'anomaly_maps shape in seg auroc',anomaly_maps.shape)
     anomaly_maps_ = bilinears(anomaly_maps, (256, 256))
     fig, ax=plt.subplots(figsize=(15, 8), ncols=2)
-    ax[0].imshow(anomaly_maps, cmap='Spectral')
-    ax[1].imshow(anomaly_maps_, cmap='Spectral')
+    ax[0].imshow(anomaly_maps[0], cmap='Spectral')
+    ax[1].imshow(anomaly_maps_[0], cmap='Spectral')
     
     print('computing rocs')
     auroc = roc_auc_score(gt.flatten(), anomaly_maps_.flatten())
